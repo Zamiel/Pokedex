@@ -1,0 +1,29 @@
+@import '~@angular/material/theming';
+@import "../fonts/futura/futura-lt";
+@import "spacing";
+@import "utils";
+
+html, body {
+  height: 100%;
+}
+
+$base-font-family: "Futura LT", sans-serif;
+
+body {
+  margin: 0;
+  font-family: $base-font-family;
+
+  span, p {
+    font-family: $base-font-family;
+  }
+}
+
+$custom-typography: mat-typography-config(
+        $font-family: "Futura LT, sans-serif",
+        $headline: mat-typography-level(32px, 48px, 700),
+        $body-1: mat-typography-level(16px, 24px, 500)
+);
+
+@include angular-material-typography($custom-typography);
+@include mat-base-typography($custom-typography);
+@include mat-core($custom-typography);

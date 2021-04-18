@@ -1,0 +1,9 @@
+{
+  "TITLE": "Pokedex",
+  "DETAILS": {
+    "SPRITES": {
+      "DEFAULT": "Default",
+      "SHINY": "Shiny"
+    }
+  }
+}
