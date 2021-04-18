@@ -1,0 +1,12 @@
+<div class="mb-1">
+    <mat-card class="card-container" fxLayout="row" fxLayoutGap="auto">
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <h4 class="pokemon-title mb-0">{{name}}</h4>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button color="primary" [routerLink]="['/pokemon', name]">
+                <mat-icon>info_outline</mat-icon>
+            </button>
+        </div>
+    </mat-card>
+</div>

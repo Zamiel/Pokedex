@@ -1,15 +1,32 @@
-<div style="width: 100%; height: 100%">
-<!--    <form class="example-form">-->
-<!--        <mat-form-field class="example-full-width">-->
-<!--            <mat-label>Assignee</mat-label>-->
-<!--            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">-->
-<!--            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">-->
-<!--                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">-->
-<!--                    {{option.name}}-->
-<!--                </mat-option>-->
-<!--            </mat-autocomplete>-->
-<!--        </mat-form-field>-->
-<!--    </form>-->
+<div class="w-100 container" fxFlex="">
+    <form fxLayout="row wrap">
+        <mat-form-field class="w-50">
+            <input matInput
+                   [formControl]="searchFormControl"
+                   [matTooltip]="searchTooltip"
+                   matTooltipShowDelay="250"
+                   matTooltipPosition="above"
+                   placeholder="Ex. Pikachu">
+        </mat-form-field>
+        <button mat-icon-button color="warn" (click)="onDeleteClick()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </form>
 
-    <p>pokemon-list works!</p>
+    <mat-divider></mat-divider>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="mt-2" *ngIf="isListEmpty">
+        <mat-icon color="warn">alert</mat-icon>
+        <span class="ml-h">{{ 'LIST.SEARCH.EMPTY' | translate }}</span>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutGap="1rem grid" fxLayoutAlign="space-between" class="mt-2">
+        <ng-container *ngFor="let option of filteredOptions">
+            <app-list-card fxFlex.lt-md="100%"
+                           fxFlex.md="50%"
+                           fxFlex.gt-md="33%"
+                           [name]="option.name">
+            </app-list-card>
+        </ng-container>
+    </div>
 </div>

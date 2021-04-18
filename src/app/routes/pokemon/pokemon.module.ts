@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MaterialModule } from 'src/app/modules/material.module';
+import { MaterialModule, SharedModule } from 'src/app/modules';
 import { PokemonDetailsComponent } from './details/pokemon-details.component';
 import { PokemonListComponent } from './list/pokemon-list.component';
 import { PokemonComponent } from './pokemon.component';
 import { PokemonListResolver, PokemonDetailsResolver } from './resolvers';
+import { FlexModule } from '@angular/flex-layout';
+import { ListCardComponent } from './list/list-card/list-card.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    ListCardComponent,
     PokemonComponent,
     PokemonDetailsComponent,
     PokemonListComponent,
@@ -41,6 +44,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
+    SharedModule,
+    FlexModule,
   ],
   exports: [
     PokemonComponent,

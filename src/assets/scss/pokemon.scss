@@ -1,0 +1,7 @@
+.pokemon-title {
+  font-weight: 500;
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}

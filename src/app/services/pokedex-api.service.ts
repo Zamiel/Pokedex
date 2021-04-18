@@ -5,7 +5,6 @@ import { retry, catchError, map } from 'rxjs/operators';
 import { ApiSettings } from '../config/app.config';
 import { INameUrl, IPokemon, IPokemonList } from './pokemon';
 import { REG_EXP_FIND_ID, REG_EXP_FIND_ID_ON_URL } from '../utils/regexp';
-import { IOption } from '../config/option';
 
 @Injectable({
   providedIn: 'root',
