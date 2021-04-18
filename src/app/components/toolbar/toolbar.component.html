@@ -2,10 +2,10 @@
     <mat-toolbar>
         <span>{{ 'TITLE' | translate }}</span>
         <span class="toolbar-space"></span>
-        <button mat-icon-button mat-ripple class="ripple-fix" (click)="onLangClick()">
+        <button mat-icon-button (click)="onLangClick()">
             {{ nextLang }}
         </button>
-        <img src="../assets/icons/sealed-chest.png" class="m-l-1" width="24px" alt="sealed box"
+        <img src="../assets/icons/sealed-chest.png" class="ml-1" width="24px" alt="sealed box"
              (click)="onSealedBoxClick()">
     </mat-toolbar>
 </p>

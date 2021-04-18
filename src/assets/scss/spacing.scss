@@ -9,6 +9,26 @@ $spacers: (
         3: (x: ($spacer-x * 3), y: ($spacer-y * 3)),
         4: (x: ($spacer-x * 4), y: ($spacer-y * 4))
 );
+$sizes: (
+        0: (ratio: 0%),
+        25: (ratio: 25%),
+        33: (ratio: 33%),
+        50: (ratio: 50%),
+        66: (ratio: 66%),
+        75: (ratio: 75%),
+        100: (ratio: 100%)
+);
+
+@mixin sizing() {
+  @each $prop, $abbrev in (width: w, height: h) {
+    @each $size, $obj in $sizes {
+      $ratio: map-get($obj, 'ratio');
+      #{$abbrev}-#{$size} {
+        #{$prop}: $ratio !important;
+      }
+    }
+  }
+}
 
 @mixin spacing() {
   @each $prop, $abbrev in (margin: m, padding: p) {
@@ -19,23 +39,23 @@ $spacers: (
       .#{$abbrev}-#{$size} {
         #{$prop}: $length-y $length-x !important;
       }
-      .#{$abbrev}-t-#{$size} {
+      .#{$abbrev}t-#{$size} {
         #{$prop}-top: $length-y !important;
       }
-      .#{$abbrev}-r-#{$size} {
+      .#{$abbrev}r-#{$size} {
         #{$prop}-right: $length-x !important;
       }
-      .#{$abbrev}-b-#{$size} {
+      .#{$abbrev}b-#{$size} {
         #{$prop}-bottom: $length-y !important;
       }
-      .#{$abbrev}-l-#{$size} {
+      .#{$abbrev}l-#{$size} {
         #{$prop}-left: $length-x !important;
       }
-      .#{$abbrev}-x-#{$size} {
+      .#{$abbrev}x-#{$size} {
         #{$prop}-left: $length-x !important;
         #{$prop}-right: $length-x !important;
       }
-      .#{$abbrev}-y-#{$size} {
+      .#{$abbrev}y-#{$size} {
         #{$prop}-top: $length-y !important;
         #{$prop}-bottom: $length-y !important;
       }
@@ -43,4 +63,5 @@ $spacers: (
   }
 }
 
+@include sizing();
 @include spacing();

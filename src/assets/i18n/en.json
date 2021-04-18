@@ -1,9 +1,21 @@
 {
   "TITLE": "Pokedex",
+  "POKEMON": {
+    "SINGLE": "Pokemon",
+    "PLURAL": "Pokemons"
+  },
   "DETAILS": {
     "SPRITES": {
       "DEFAULT": "Default",
       "SHINY": "Shiny"
+    }
+  },
+  "LIST": {
+    "SEARCH": {
+      "EMPTY": "Sorry, we couldn't find your pokemon."
+    },
+    "TOOLTIP": {
+      "SEARCH": "You can search by typing the name of your wanted pokemon"
     }
   }
 }

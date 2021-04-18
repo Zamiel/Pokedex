@@ -13,6 +13,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MaterialModule } from './modules/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SpritesViewerComponent } from './components/sprites-viewer/sprites-viewer.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -30,6 +31,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -16,7 +16,7 @@ export interface ISprites {
 
 export interface IPokemonList {
   id: number;
-  pokemon_species: Array<INameUrl>;
+  pokemon_species: INameUrl[];
 }
 
 export interface IPokemonType {
