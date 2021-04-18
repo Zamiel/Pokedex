@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 
 import { PokedexApiService } from 'src/app/services/pokedex-api.service';
@@ -25,5 +25,9 @@ export class ListCardComponent implements OnChanges {
     } else {
       this.pokemon$ = EMPTY;
     }
+  }
+
+  getImgUrl(pokemon: IPokemon): string {
+    return `assets/icons/pokemon-type/${ pokemon.types[0].type.name }.png`;
   }
 }

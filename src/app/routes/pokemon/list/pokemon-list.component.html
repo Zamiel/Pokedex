@@ -16,15 +16,15 @@
     <mat-divider></mat-divider>
 
     <div fxLayout="row" fxLayoutAlign="center center" class="mt-2" *ngIf="isListEmpty">
-        <mat-icon color="warn">alert</mat-icon>
+        <mat-icon color="warn">alert_circle</mat-icon>
         <span class="ml-h">{{ 'LIST.SEARCH.EMPTY' | translate }}</span>
     </div>
 
-    <div fxLayout="row wrap" fxLayoutGap="1rem grid" fxLayoutAlign="space-between" class="mt-2">
+    <div fxLayout="row wrap" fxLayoutGap="1rem grid" fxLayoutAlign="start" class="mt-2">
         <ng-container *ngFor="let option of filteredOptions">
             <app-list-card fxFlex.lt-md="100%"
-                           fxFlex.md="50%"
-                           fxFlex.gt-md="33%"
+                           fxFlex.md="33%"
+                           fxFlex.gt-md="25%"
                            [name]="option.name">
             </app-list-card>
         </ng-container>

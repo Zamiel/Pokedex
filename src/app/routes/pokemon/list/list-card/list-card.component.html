@@ -1,6 +1,9 @@
 <div class="mb-1">
     <mat-card class="card-container" fxLayout="row" fxLayoutGap="auto">
         <div fxLayout="row" fxLayoutAlign="start center">
+            <ng-container *ngIf="pokemon$ | async; let pokemon">
+                <img [src]="getImgUrl(pokemon)" class="mr-h" width="24" alt="pokemon-type">
+            </ng-container>
             <h4 class="pokemon-title mb-0">{{name}}</h4>
         </div>
         <div fxLayout="row" fxLayoutAlign="end center">

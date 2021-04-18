@@ -26,27 +26,30 @@ export class PokemonListComponent implements OnInit {
   }
 
   constructor(private router: Router, private route: ActivatedRoute, private translate: TranslateService) {
-    this.searchFormControl = new FormControl(this.route.snapshot.queryParams.search);
+    this.searchFormControl = new FormControl();
     this.filteredOptions = [];
     this._options = [];
   }
 
   ngOnInit(): void {
-    const { data } = this.route.snapshot;
+    const { data, queryParams } = this.route.snapshot;
 
     if (data && data.list) {
       this._options = data.list.concat();
     }
 
-    this.filteredOptions = this._options.concat();
-    this.listenSearchFormControl();
+    if (!queryParams.search) {
+      this.filteredOptions = this._options.concat();
+    }
+
+    this.listenSearchFormControl(queryParams.search);
   }
 
   onDeleteClick(): void {
     this.searchFormControl.setValue('');
   }
 
-  private listenSearchFormControl(): void {
+  private listenSearchFormControl(initialSearch: string): void {
     this.searchFormControl.valueChanges
       .pipe(
         debounceTime(250),
@@ -57,7 +60,7 @@ export class PokemonListComponent implements OnInit {
           this.filteredOptions = this._options.concat();
         } else {
           this.router.navigate([], {
-            relativeTo: this.route, queryParams: { search: selectedValue },
+            relativeTo: this.route, queryParams: { search: selectedValue.toLowerCase() },
           });
           this.filteredOptions = this._options.concat()
             .filter((option: INameUrl) => {
@@ -65,5 +68,9 @@ export class PokemonListComponent implements OnInit {
             });
         }
       });
+
+    if (initialSearch) {
+      this.searchFormControl.setValue(initialSearch);
+    }
   }
 }
