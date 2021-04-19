@@ -5,7 +5,7 @@ import { retry, catchError, map, tap } from 'rxjs/operators';
 import { ApiSettings } from '../config/app.config';
 import { ILocalizedAbility, INameUrl, IPokemon, IPokemonList } from './pokemon';
 import { REG_EXP_FIND_ID } from '../utils/regexp';
-import { mapStatToPokemonStat } from '../config/pokemon.config';
+import { mapStatToPokemonStat } from 'src/app/config/pokemon.config';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
