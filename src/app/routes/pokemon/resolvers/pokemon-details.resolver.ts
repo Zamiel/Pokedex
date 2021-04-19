@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import {
-  Router, Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { PokedexApiService } from 'src/app/services/pokedex-api.service';
+import { IPokemon } from 'src/app/services/pokemon';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PokemonDetailsResolver implements Resolve<boolean> {
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return of(true);
+export class PokemonDetailsResolver implements Resolve<IPokemon> {
+  constructor(private pokedexApi: PokedexApiService) {
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPokemon> {
+    return this.pokedexApi.fetchPokemonByName(route.params.pokemonId);
   }
 }

@@ -1,1 +1,12 @@
-<p>sprites-viewer works!</p>
+<mat-tab-group animationDuration="0ms" class="w-100">
+    <mat-tab [label]="defaultLabel" class="w-50">
+        <dvi fxLayout="row nowrap" fxLayoutAlign="center center" style="height: 201px">
+            <img [src]="defaultSprite" alt="front_default">
+        </dvi>
+    </mat-tab>
+    <mat-tab [label]="shinyLabel" class="w-50">
+        <dvi fxLayout="row nowrap" fxLayoutAlign="center center" style="height: 201px">
+            <img [src]="shinySprite" alt="front_shiny">
+        </dvi>
+    </mat-tab>
+</mat-tab-group>

@@ -1,16 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
-import { retry, catchError, map } from 'rxjs/operators';
+import { EMPTY, forkJoin, Observable } from 'rxjs';
+import { retry, catchError, map, tap } from 'rxjs/operators';
 import { ApiSettings } from '../config/app.config';
-import { INameUrl, IPokemon, IPokemonList } from './pokemon';
-import { REG_EXP_FIND_ID, REG_EXP_FIND_ID_ON_URL } from '../utils/regexp';
+import { ILocalizedAbility, INameUrl, IPokemon, IPokemonList } from './pokemon';
+import { REG_EXP_FIND_ID } from '../utils/regexp';
+import { mapStatToPokemonStat } from '../config/pokemon.config';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PokedexApiService {
-  constructor(private http: HttpClient) {
+  static VERSION_CONTROL = 'black-white';
+
+  constructor(private http: HttpClient, private translate: TranslateService) {
   }
 
   private getSpecificPokemonEndpoint(arg: string): string {
@@ -43,33 +47,69 @@ export class PokedexApiService {
       );
   }
 
-  public fetchPokemonByAbility(ability: string, limit: number, offset: number): Observable<any> {
-    return this.http.get(ApiSettings.API_URL);
+  public fetchAbilitiesLocalization(abilityNames: string[]): Observable<ILocalizedAbility[]> {
+    return forkJoin(abilityNames.map((name: string) => this.fetchAbilityLocalization(name)));
   }
 
-  public fetchPokemonById(id: number): Observable<IPokemon> {
-    return this.http.get<IPokemon>(this.getSpecificPokemonEndpoint(id.toFixed(0)))
+  public fetchAbilityLocalization(abilityName: string): Observable<ILocalizedAbility> {
+    return this.http.get<any>(`${ ApiSettings.API_URL }/ability/${ abilityName }`)
       .pipe(
+        map((resp: any) => {
+          const description: any = {};
+          const name: any = {};
+
+          if (resp) {
+            resp.flavor_text_entries
+              .filter((textEntry: any) => {
+                const lang = textEntry.language.name  || null;
+                const version = textEntry.version_group.name || null;
+
+                return !!lang && !!version &&
+                  version === PokedexApiService.VERSION_CONTROL && this.translate.langs.indexOf(lang) >= 0;
+              })
+              .forEach((textEntry: any) => {
+                const lang = textEntry.language.name;
+                description[lang] = textEntry.flavor_text;
+              });
+
+            resp.names
+              .filter((n: any) => {
+                const lang = n.language.name;
+                return this.translate.langs.indexOf(lang) >= 0;
+              })
+              .forEach((n: any) => {
+                const lang = n.language.name;
+                name[lang] = n.name;
+              });
+          }
+
+          return { description, name } as ILocalizedAbility;
+        }),
+      );
+  }
+
+  public fetchPokemonByName(name: string, reset = false): Observable<IPokemon> {
+    return this.http.get<any>(this.getSpecificPokemonEndpoint(name))
+      .pipe(
+        map((resp: any) => {
+          return (resp ? {
+            id: resp.id,
+            name: resp.name,
+            abilities: resp ? resp.abilities.map(({ ability }: any) => ability.name) : [],
+            sprites: {
+              front_default: resp.sprites.front_default,
+              front_shiny: resp.sprites.front_shiny,
+            },
+            stats: mapStatToPokemonStat(resp.stats),
+            type: resp.types ? resp.types[0].type.name : 'normal',
+          } : {}) as IPokemon;
+        }),
         retry(ApiSettings.MAX_RETRY),
         catchError((err) => {
           console.error(err);
           return EMPTY;
         }),
-      );
-  }
-
-  public fetchPokemonByName(name: string): Observable<IPokemon> {
-    return this.http.get<IPokemon>(this.getSpecificPokemonEndpoint(name))
-      .pipe(
-        retry(ApiSettings.MAX_RETRY),
-        catchError((err) => {
-          console.error(err);
-          return EMPTY;
-        }),
-      );
-  }
-
-  public fetchPokemons(query: string, limit: number, offset: number): Observable<IPokemon[]> {
-    return new Observable<Array<IPokemon>>();
+      )
+      ;
   }
 }

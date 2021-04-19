@@ -10,6 +10,16 @@
       "SHINY": "Brillant"
     }
   },
+  "ENUMS": {
+    "STATS": {
+      "HP": "PV",
+      "ATTACK": "Attaque",
+      "DEFENSE": "Defence",
+      "SPECIAL_ATTACK": "Attaque Special",
+      "SPECIAL_DEFENSE": "Defence Special",
+      "SPEED": "Vitesse"
+    }
+  },
   "LIST": {
     "SEARCH": {
       "EMPTY": "Désolé, nous n'avons pas pu trouver votre pokémon."

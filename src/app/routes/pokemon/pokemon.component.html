@@ -1,28 +1,30 @@
-<div class="container p-1">
-    <mat-card class="mat-elevation-z5 overflow-hidden">
-        <ng-container *ngIf="canGoBack; then breadcrumb else title"></ng-container>
-        <ng-template #breadcrumb>
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <a class="no-text-decoration" routerLink="/pokemon">
-                    <h2 class="mb-0">{{ 'POKEMON.PLURAL' | translate }}</h2>
-                </a>
-                <span class="mx-h">-</span>
-                <h2 class="pokemon-title mb-0">{{ name }}</h2>
-            </div>
-        </ng-template>
-        <ng-template #title>
-            <h2 class="mb-0">{{ 'POKEMON.PLURAL' | translate }}</h2>
-        </ng-template>
+<div class="p-1" fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="column" fxFlex="auto" fxFlex.gt-md="75">
+        <mat-card class="mat-elevation-z5 overflow-hidden">
+            <ng-container *ngIf="canGoBack; then breadcrumb else title"></ng-container>
+            <ng-template #breadcrumb>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <a class="no-text-decoration" routerLink="/pokemon">
+                        <h2 class="mb-0">{{ 'POKEMON.PLURAL' | translate }}</h2>
+                    </a>
+                    <span class="mx-h">-</span>
+                    <h2 class="pokemon-title mb-0">{{ name }}</h2>
+                </div>
+            </ng-template>
+            <ng-template #title>
+                <h2 class="mb-0">{{ 'POKEMON.PLURAL' | translate }}</h2>
+            </ng-template>
 
-        <ng-container *ngIf="isLoading; then loading else route">
-        </ng-container>
-        <ng-template #loading>
-            <div fxLayout="row" fxLayoutAlign="center center">
-                <mat-spinner color="primary"></mat-spinner>
-            </div>
-        </ng-template>
-        <ng-template #route>
-            <router-outlet></router-outlet>
-        </ng-template>
-    </mat-card>
+            <ng-container *ngIf="isLoading; then loading else route">
+            </ng-container>
+            <ng-template #loading>
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-spinner color="primary"></mat-spinner>
+                </div>
+            </ng-template>
+            <ng-template #route>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </mat-card>
+    </div>
 </div>

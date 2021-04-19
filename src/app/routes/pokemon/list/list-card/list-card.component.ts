@@ -28,6 +28,6 @@ export class ListCardComponent implements OnChanges {
   }
 
   getImgUrl(pokemon: IPokemon): string {
-    return `assets/icons/pokemon-type/${ pokemon.types[0].type.name }.png`;
+    return `assets/icons/pokemon-type/${ pokemon.type }.png`;
   }
 }

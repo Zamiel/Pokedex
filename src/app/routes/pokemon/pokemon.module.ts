@@ -9,6 +9,10 @@ import { PokemonComponent } from './pokemon.component';
 import { PokemonListResolver, PokemonDetailsResolver } from './resolvers';
 import { FlexModule } from '@angular/flex-layout';
 import { ListCardComponent } from './list/list-card/list-card.component';
+import { StatBarComponent } from '../../components/stat-bar/stat-bar.component';
+import { SpritesViewerComponent } from '../../components/sprites-viewer/sprites-viewer.component';
+import { AbilitiesComponent } from './details/abilities/abilities.component';
+import { AbilityComponent } from './details/abilities/ability/ability.component';
 
 const routes: Routes = [
   {
@@ -35,7 +39,11 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+    AbilitiesComponent,
+    AbilityComponent,
     ListCardComponent,
+    StatBarComponent,
+    SpritesViewerComponent,
     PokemonComponent,
     PokemonDetailsComponent,
     PokemonListComponent,

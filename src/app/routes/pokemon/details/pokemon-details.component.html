@@ -1,3 +1,32 @@
-<div style="width: 100%; height: 100%;">
-    <p>pokemon-details works!</p>
-</div>
+<ng-container *ngIf="details">
+    <div fxLayout="row wrap"
+         fxLayoutAlign.lt-sm="center center"
+         fxLayoutAlign.sm="space-between center"
+         fxLayoutAlign.md="space-between center"
+         fxLayoutAlign.gt-md="space-between center">
+
+        <div fxLayout="column" fxFlex.sm="100" fxLayoutAlign.lt-md="center center">
+            <app-sprites-viewer [sprites]="details.sprites"></app-sprites-viewer>
+        </div>
+
+        <div fxLayout="column" fxFlex.lt-sm="80" fxFlex.lt-md="40" fxFlex="33" fxLayoutAlign="center">
+            <app-abilities [abilityNames]="details.abilities" [typeIconSrc]="typeIcon"></app-abilities>
+        </div>
+
+        <div fxLayout="column" fxFlex.lt-sm="80" fxFlex.lt-md="40" fxFlex="33">
+            <ng-container *ngFor="let key of statKeys">
+                <div style="width: 100%" fxLayout="row" fxLayoutAlign.lt-sm="center start" fxLayoutAlign="end start">
+                    <div class="stat-bar-container my-h" fxLayout="column">
+                        <div fxLayout="row wrap">
+                            <span>{{ getStatByKey(key) }}</span>
+                            <span class="mx-h">-</span>
+                            <span>{{ getLabelId(key) | translate }}</span>
+                        </div>
+                        <app-stat-bar [current]="getStatByKey(key)" [key]="key"></app-stat-bar>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+

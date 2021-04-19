@@ -10,6 +10,16 @@
       "SHINY": "Shiny"
     }
   },
+  "ENUMS": {
+    "STATS": {
+      "HP": "HP",
+      "ATTACK": "Attack",
+      "DEFENSE": "Defense",
+      "SPECIAL_ATTACK": "Special Attack",
+      "SPECIAL_DEFENSE": "Special Defense",
+      "SPEED": "Speed"
+    }
+  },
   "LIST": {
     "SEARCH": {
       "EMPTY": "Sorry, we couldn't find your pokemon."

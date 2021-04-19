@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const materials = [
   MatAutocompleteModule,
@@ -21,6 +22,7 @@ const materials = [
   MatInputModule,
   MatRippleModule,
   MatProgressSpinnerModule,
+  MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
 ];

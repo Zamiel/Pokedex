@@ -2,12 +2,10 @@ export interface INameUrl {
   name: string;
   url: string;
 }
-
-export interface IAbility {
-  ability: INameUrl;
-  is_hidden: boolean;
-  slot: number;
-}
+export interface ILocalizedAbility {
+  description: { [key: string]: string };
+  name: { [key: string]: string };
+};
 
 export interface ISprites {
   front_default: string;
@@ -19,16 +17,21 @@ export interface IPokemonList {
   pokemon_species: INameUrl[];
 }
 
-export interface IPokemonType {
-  slot: number;
-  type: INameUrl;
-}
-
 export interface IPokemon {
   id: number;
-  abilities: Array<IAbility>;
+  abilities: string[];
   name: string;
   order: number;
   sprites: ISprites;
-  types: Array<IPokemonType>;
+  stats: IPokemonStats;
+  type: string;
+}
+
+export interface IPokemonStats {
+  hp: number;
+  attack: number;
+  defense: number;
+  special_attack: number;
+  special_defense: number;
+  speed: number;
 }
