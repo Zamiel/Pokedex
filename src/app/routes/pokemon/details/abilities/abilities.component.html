@@ -1,0 +1,15 @@
+<mat-card class="abilities mat-elevation-z3">
+    <div fxLayout="row" fxLayoutAlign="end">
+        <img [src]="typeIconSrc" class="mr-h" width="36" alt="pokemon-type">
+    </div>
+    <ng-container *ngIf="loading then loadingBlock else abilitiesBlock"></ng-container>
+    <ng-template #loadingBlock>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-spinner class="m-1" color="primary"></mat-spinner>
+        </div>
+    </ng-template>
+    <ng-template #abilitiesBlock>
+        <app-ability *ngFor="let ability of abilities" [name]="ability.name"
+                     [description]="ability.description"></app-ability>
+    </ng-template>
+</mat-card>

@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PokemonModule } from './routes/pokemon/pokemon.module';
 import { PokedexApiService } from './services/pokedex-api.service';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { MaterialModule } from './modules/material.module';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { SpritesViewerComponent } from './components/sprites-viewer/sprites-viewer.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from './modules';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -23,7 +22,6 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     ToolbarComponent,
-    SpritesViewerComponent,
   ],
   imports: [
     BrowserModule,
