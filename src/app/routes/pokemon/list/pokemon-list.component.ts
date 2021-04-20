@@ -1,20 +1,22 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { debounceTime } from 'rxjs/operators';
 
 import { INameUrl } from 'src/app/services/pokemon';
-import { debounceTime } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent implements OnInit {
+export class PokemonListComponent implements OnInit, OnDestroy {
   filteredOptions: INameUrl[];
   searchFormControl: FormControl;
 
+  private _formControlSubscription?: Subscription;
   private _options: INameUrl[];
 
   get isListEmpty(): boolean {
@@ -38,11 +40,18 @@ export class PokemonListComponent implements OnInit {
       this._options = data.list.concat();
     }
 
-    if (!queryParams.search) {
+    const { search } = queryParams || {};
+    if (!search) {
       this.filteredOptions = this._options.concat();
     }
 
-    this.listenSearchFormControl(queryParams.search);
+    this.listenSearchFormControl(search);
+  }
+
+  ngOnDestroy(): void {
+    if (this._formControlSubscription) {
+      this._formControlSubscription.unsubscribe();
+    }
   }
 
   onDeleteClick(): void {
@@ -50,7 +59,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   private listenSearchFormControl(initialSearch: string): void {
-    this.searchFormControl.valueChanges
+    this._formControlSubscription = this.searchFormControl.valueChanges
       .pipe(
         debounceTime(250),
       )

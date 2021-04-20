@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IPokemon, IPokemonStats } from '../../../services/pokemon';
-import { getStatByKey } from '../../../config/pokemon.config';
+
+import { getStatByKey } from 'src/app/config/pokemon.config';
+import { IPokemon, IPokemonStats } from 'src/app/services/pokemon';
 
 @Component({
   selector: 'app-pokemon-details',

@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./pokemon.component.scss'],
 })
 export class PokemonComponent implements OnDestroy {
-  private _routerSubscription: Subscription;
-
   canGoBack = false;
   isLoading = false;
   name = '';
+
+  private _routerSubscription?: Subscription;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
     this._routerSubscription = this.router.events
@@ -30,7 +30,9 @@ export class PokemonComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._routerSubscription.unsubscribe();
+    if (this._routerSubscription) {
+      this._routerSubscription.unsubscribe();
+    }
   }
 
   private getFirstChild(): ActivatedRoute {
