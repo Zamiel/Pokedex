@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, forkJoin, Observable } from 'rxjs';
-import { retry, catchError, map, tap } from 'rxjs/operators';
-import { ApiSettings } from '../config/app.config';
-import { ILocalizedAbility, INameUrl, IPokemon, IPokemonList } from './pokemon';
-import { REG_EXP_FIND_ID } from '../utils/regexp';
-import { mapStatToPokemonStat } from 'src/app/config/pokemon.config';
 import { TranslateService } from '@ngx-translate/core';
+import { EMPTY, forkJoin, Observable, of, throwError, timer } from 'rxjs';
+import { retry, catchError, map, tap, delayWhen, shareReplay, retryWhen, delay } from 'rxjs/operators';
+
+import { mapStatToPokemonStat } from 'src/app/config/pokemon.config';
+import { ApiSettings } from 'src/app/config/app.config';
+import { REG_EXP_FIND_ID } from '../utils/regexp';
+import { ILocalizedAbility, INameUrl, IPokemon, IPokemonList } from './pokemon';
 
 @Injectable({
   providedIn: 'root',
@@ -22,17 +23,6 @@ export class PokedexApiService {
     return `${ ApiSettings.API_URL }${ ApiSettings.POKEMON_ENDPOINT.replace(REG_EXP_FIND_ID, arg) }`;
   }
 
-  public fetchByUrl(url: string): Observable<IPokemon> {
-    return this.http.get<IPokemon>(url)
-      .pipe(
-        retry(ApiSettings.MAX_RETRY),
-        catchError((err) => {
-          console.error(err);
-          return EMPTY;
-        }),
-      );
-  }
-
   public fetchFirstGeneration(): Observable<INameUrl[]> {
     return this.http.get<IPokemonList>(`${ ApiSettings.API_URL }/generation/1`)
       .pipe(
@@ -40,10 +30,7 @@ export class PokedexApiService {
           return (resp.pokemon_species || []);
         }),
         retry(ApiSettings.MAX_RETRY),
-        catchError((err) => {
-          console.error(err);
-          return EMPTY;
-        }),
+        catchError(error => throwError(error)),
       );
   }
 
@@ -61,7 +48,7 @@ export class PokedexApiService {
           if (resp) {
             resp.flavor_text_entries
               .filter((textEntry: any) => {
-                const lang = textEntry.language.name  || null;
+                const lang = textEntry.language.name || null;
                 const version = textEntry.version_group.name || null;
 
                 return !!lang && !!version &&
@@ -85,10 +72,12 @@ export class PokedexApiService {
 
           return { description, name } as ILocalizedAbility;
         }),
+        retry(ApiSettings.MAX_RETRY),
+        catchError(error => throwError(error)),
       );
   }
 
-  public fetchPokemonByName(name: string, reset = false): Observable<IPokemon> {
+  public fetchPokemonByName(name: string): Observable<IPokemon> {
     return this.http.get<any>(this.getSpecificPokemonEndpoint(name))
       .pipe(
         map((resp: any) => {
@@ -105,11 +94,7 @@ export class PokedexApiService {
           } : {}) as IPokemon;
         }),
         retry(ApiSettings.MAX_RETRY),
-        catchError((err) => {
-          console.error(err);
-          return EMPTY;
-        }),
-      )
-      ;
+        catchError(error => throwError(error)),
+      );
   }
 }

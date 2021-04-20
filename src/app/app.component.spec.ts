@@ -1,15 +1,34 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateService } from '@ngx-translate/core';
+
+import { MockToolbarComponent } from '../test/components/mock-toolbar.component';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  const translateServiceStub = {
+    set langs(value: string[]) {
+    },
+    getBrowserLang(): string {
+      return 'fr';
+    },
+    setDefaultLang(value: string): void {
+    },
+    use(value: string): void {
+    },
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockToolbarComponent,
+      ],
+      providers: [
+        { provide: TranslateService, useValue: translateServiceStub },
       ],
     }).compileComponents();
   });
@@ -18,18 +37,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'pokedex'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('pokedex');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('pokedex app is running!');
   });
 });

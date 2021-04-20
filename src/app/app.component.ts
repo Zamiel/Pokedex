@@ -7,8 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'pokedex';
-
   constructor(private translate: TranslateService) {
   }
 
